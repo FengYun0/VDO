@@ -14,6 +14,7 @@
 #===============================================================================
 # Initial
 #===============================================================================
+#import os.path
 import os.path
 os.chdir(os.path.dirname(os.path.realpath(__file__))) 
 os.environ['NLS_LANG']='SIMPLIFIED CHINESE_CHINA.UTF8'
