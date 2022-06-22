@@ -1,0 +1,65 @@
+# -*- coding: utf-8 -*-
+# Level: CRITICAL > ERROR > WARNING > INFO > DEBUG > NOTSET
+version: 1
+disable_existing_loggers: True
+formatters:
+    simple:
+        format: '%(asctime)s.%(msecs)03d - %(module)-10s [%(levelname)-8s] %(message)s'
+        datefmt: '%Y-%m-%d %H:%M:%S'
+
+handlers:
+    console:
+        class: logging.StreamHandler
+        level: DEBUG
+        formatter: simple
+        stream: ext://sys.stdout
+
+    file:
+        class: logging.handlers.TimedRotatingFileHandler
+        level: NOTSET
+        formatter: simple
+        filename: ./Logs/trace.log
+        when: midnight
+        interval: 1
+        backupCount: 30
+        encoding: utf8
+        delay: False
+        utc: False
+        atTime:
+    file_error:
+        class: logging.handlers.TimedRotatingFileHandler
+        level: WARNING
+        formatter: simple
+        filename: ./Logs/error.log
+        when: midnight
+        interval: 1
+        backupCount: 30
+        encoding: utf8
+        delay: False
+        utc: False
+        atTime:
+
+    email:
+        class: logging.handlers.SMTPHandler
+        level: CRITICAL
+        formatter: simple
+        mailhost: ['mail.weltrend.com.tw', 587]
+        fromaddr: vidasys@weltrend.com.tw
+        toaddrs: 
+                - vidasys@weltrend.com.tw
+                - corey.liu@xdmtech.com
+                - candy.chang@xdmtech.com
+        subject: 'CP Loader ERROR.'
+        credentials: ['vidasys@weltrend.com.tw','VI(9436em']
+        secure: []
+        timeout: 5.0
+
+#loggers:
+#    my_module:
+#        level: ERROR
+#        handlers: [console]
+#        propagate: no
+
+root:
+    level: DEBUG
+    handlers: [console, file, file_error, email]
